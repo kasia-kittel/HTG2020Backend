@@ -33,6 +33,9 @@ def create_app(test_config=None):
     from . import consumers
     app.register_blueprint(consumers.bp)
 
+    from . import professionals
+    app.register_blueprint(professionals.bp)
+
     # a healthcheck
     @app.route('/healthcheck')
     def healthcheck():
