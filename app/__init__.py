@@ -25,7 +25,11 @@ def create_app(test_config=None):
     except OSError:
         pass
 
-    # a simple page that says hello
+    # init the database
+    from . import db
+    db.init_app(app)
+
+    # a healthcheck
     @app.route('/healthcheck')
     def healthcheck():
         return {'status': 'ok'}
