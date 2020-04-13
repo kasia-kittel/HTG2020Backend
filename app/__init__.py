@@ -2,7 +2,6 @@ import os
 from flask_api import FlaskAPI
 
 
-
 def create_app(test_config=None):
 
     app = FlaskAPI(__name__, instance_relative_config=True)

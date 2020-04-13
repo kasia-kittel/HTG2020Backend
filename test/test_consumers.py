@@ -1,4 +1,3 @@
-from flask import request, jsonify
 
 def test_consumers_exist(client):
     maybe_consumer = client.get("/consumer/1")
@@ -11,7 +10,5 @@ def test_consumers_exist(client):
 
 def test_consumers_not_exist(client):
     maybe_consumer = client.get("/consumer/1000")
-
-    json_data = maybe_consumer.get_json()
 
     assert maybe_consumer.status_code == 404
