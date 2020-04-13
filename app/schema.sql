@@ -53,3 +53,8 @@ values
     and up. I am dual trained in Family Medicine and Psychiatry and this gives me confidence to treat psychiatric
     conditions and weed out any medical conditions that can present with psychiatric complaints.
     I work in a multi disciplinary practice with different clinicians and treat a broad spectrum of psychiatric conditions.");
+
+-- full test search extension FTS5
+drop table IF EXISTS profile_search;
+create VIRTUAL TABLE profile_search using fts5(id, fullname, qualifications, profession, profile);
+insert into  profile_search SELECT id, fullname, qualifications, profession, fullname || ' ' || qualifications || ' ' || profession || ' ' || specialties || ' ' || languages || ' ' || details as profile FROM professionals;
