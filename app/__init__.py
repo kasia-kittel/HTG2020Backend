@@ -29,6 +29,10 @@ def create_app(test_config=None):
     from . import db
     db.init_app(app)
 
+    # add blueprints
+    from . import consumers
+    app.register_blueprint(consumers.bp)
+
     # a healthcheck
     @app.route('/healthcheck')
     def healthcheck():

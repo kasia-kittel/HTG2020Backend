@@ -1,8 +1,15 @@
 import sqlite3
+from builtins import dict
 
 import click
 from flask import current_app, g
 from flask.cli import with_appcontext
+from py._builtin import enumerate
+
+
+def make_dicts(cursor, row):
+    return dict((cursor.description[idx][0], value)
+                for idx, value in enumerate(row))
 
 
 def get_db():
@@ -11,9 +18,16 @@ def get_db():
             current_app.config['DATABASE'],
             detect_types=sqlite3.PARSE_DECLTYPES
         )
-        g.db.row_factory = sqlite3.Row
-
+        # g.db.row_factory = sqlite3.Row
+        g.db.row_factory = make_dicts
     return g.db
+
+
+def query_db(query, args=(), one=False):
+    cur = get_db().execute(query, args)
+    rv = cur.fetchall()
+    cur.close()
+    return (rv[0] if rv else None) if one else rv
 
 
 def close_db(e=None):
