@@ -23,6 +23,14 @@ def get_db():
     return g.db
 
 
+def update_db(sql, args=()):
+    db = get_db()
+    cur = db.execute(sql, args)
+    db.commit()
+    cur.close()
+    return cur.lastrowid
+
+
 def query_db(query, args=(), one=False):
     cur = get_db().execute(query, args)
     rv = cur.fetchall()

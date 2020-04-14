@@ -1,3 +1,5 @@
+PRAGMA foreign_keys = ON;
+
 drop table IF EXISTS consumers;
 drop table IF EXISTS professionals;
 
@@ -67,7 +69,7 @@ create TABLE professionals_bookmarks (
     FOREIGN KEY (consumer_id)
         REFERENCES consumers (id) ON DELETE CASCADE,
     FOREIGN KEY (professional_id)
-        REFERENCES professional (id) ON DELETE CASCADE
+        REFERENCES professionals (id) ON DELETE CASCADE
 );
 
 insert into professionals_bookmarks (consumer_id, professional_id) values (1, 3);
