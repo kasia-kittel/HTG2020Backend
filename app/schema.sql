@@ -62,6 +62,7 @@ create VIRTUAL TABLE profile_search using fts5(id, fullname, qualifications, pro
 insert into  profile_search SELECT id, fullname, qualifications, profession, fullname || ' ' || qualifications || ' ' || profession || ' ' || specialties || ' ' || languages || ' ' || details as profile FROM professionals;
 
 -- bookmarks
+drop table IF EXISTS professionals_bookmarks;
 create TABLE professionals_bookmarks (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     consumer_id INTEGER NOT NULL,
@@ -74,3 +75,25 @@ create TABLE professionals_bookmarks (
 
 insert into professionals_bookmarks (consumer_id, professional_id) values (1, 3);
 insert into professionals_bookmarks (consumer_id, professional_id) values (1, 4);
+
+
+-- appointments
+-- all date-time in UTC
+drop table IF EXISTS appointments;
+create TABLE appointments (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    professional_id INTEGER NOT NULL,
+    consumer_id INTEGER NOT NULL,
+    requested DATETIME DEFAULT CURRENT_TIMESTAMP,
+    professional_declined DATETIME DEFAULT NULL,
+    professional_scheduled DATETIME DEFAULT NULL,
+    appointment_date DATETIME DEFAULT NULL,
+    appointment_duration INTEGER DEFAULT NULL,
+    consumer_accepted DATETIME DEFAULT NULL,
+    consumer_resigned DATETIME DEFAULT NULL,
+    status INTEGER DEFAULT NULL,
+    FOREIGN KEY (consumer_id)
+        REFERENCES consumers (id) ON DELETE CASCADE,
+    FOREIGN KEY (professional_id)
+        REFERENCES professionals (id) ON DELETE CASCADE
+);
