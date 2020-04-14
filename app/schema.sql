@@ -58,3 +58,17 @@ values
 drop table IF EXISTS profile_search;
 create VIRTUAL TABLE profile_search using fts5(id, fullname, qualifications, profession, profile);
 insert into  profile_search SELECT id, fullname, qualifications, profession, fullname || ' ' || qualifications || ' ' || profession || ' ' || specialties || ' ' || languages || ' ' || details as profile FROM professionals;
+
+-- bookmarks
+create TABLE professionals_bookmarks (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    consumer_id INTEGER NOT NULL,
+    professional_id INTEGER NOT NULL,
+    FOREIGN KEY (consumer_id)
+        REFERENCES consumers (id) ON DELETE CASCADE,
+    FOREIGN KEY (professional_id)
+        REFERENCES professional (id) ON DELETE CASCADE
+);
+
+insert into professionals_bookmarks (consumer_id, professional_id) values (1, 3);
+insert into professionals_bookmarks (consumer_id, professional_id) values (1, 4);
