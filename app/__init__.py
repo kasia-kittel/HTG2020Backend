@@ -38,6 +38,9 @@ def create_app(test_config=None):
     from . import appointments
     app.register_blueprint(appointments.bp)
 
+    from . import stats
+    app.register_blueprint(stats.bp)
+
     # a healthcheck
     @app.route('/healthcheck')
     def healthcheck():

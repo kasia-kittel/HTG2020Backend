@@ -16,6 +16,8 @@ def get_user(id):
     if maybe_professionals is None:
         return {}, status.HTTP_404_NOT_FOUND
     else:
+        maybe_badges = query_db('SELECT * FROM badges WHERE professional_id = ?', [id])
+        maybe_professionals["badges"] = maybe_badges
         return maybe_professionals
 
 
@@ -28,7 +30,7 @@ def search():
     # not-secure for demo only
     criteria = create_criteria_list(request.form['s'])
     term = create_matching_term(criteria)
-    matching_profiles = query_db('SELECT id, fullname, qualifications, profession '
+    matching_profiles = query_db('SELECT DISTINCT professional_id, fullname, qualifications, profession '
                                  'FROM profile_search WHERE profile MATCH ? ORDER BY rank', [term])
 
     return matching_profiles

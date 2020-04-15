@@ -9,9 +9,9 @@ def test_professional_exist(client):
 
 
 def test_professional_not_exist(client):
-    maybe_consumer = client.get("/professional/1000")
+    maybe_professional = client.get("/professional/1000")
 
-    assert maybe_consumer.status_code == 404
+    assert maybe_professional.status_code == 404
 
 
 def test_create_criteria():
