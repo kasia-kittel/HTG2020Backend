@@ -36,11 +36,11 @@ insert into professionals_bookmarks (consumer_id, professional_id) values (1, 3)
 insert into professionals_bookmarks (consumer_id, professional_id) values (1, 4);
 
 -- confirmed appointments
-insert into appointments (professional_id, consumer_id, professional_scheduled, appointment_date, appointment_duration, consumer_accepted)
+insert into appointments (professional_id, consumer_id, professional_scheduled, appointment_date, appointment_duration, consumer_accepted, status)
 values
-(1, 1, "2020-04-14 11:00:00", "2020-04-14 16:00:00", 45, "2020-04-14 11:05:00"),
-(1, 2, "2020-04-14 14:00:00", "2020-04-15 16:00:00", 45, "2020-04-15 08:00:00"),
-(5, 2, "2020-04-15 12:30:00", "2020-04-15 16:00:00", 60, "2020-04-15 12:40:00");
+(1, 1, "2020-04-14 11:00:00", "2020-04-14 16:00:00", 45, "2020-04-14 11:05:00", 1),
+(1, 2, "2020-04-14 14:00:00", "2020-04-15 16:00:00", 45, "2020-04-15 08:00:00", 1),
+(5, 2, "2020-04-15 12:30:00", "2020-04-15 16:00:00", 60, "2020-04-15 12:40:00", 1);
 
 -- appointments rejected by professional
 insert into appointments (professional_id, consumer_id, professional_declined )
@@ -49,10 +49,10 @@ values
 (2, 2, "2020-04-14 14:00:00");
 
 -- consumer resigned from appointment
-insert into appointments (professional_id, consumer_id, professional_scheduled, appointment_date, appointment_duration, consumer_resigned)
+insert into appointments (professional_id, consumer_id, professional_scheduled, appointment_date, appointment_duration, consumer_resigned, status)
 values
-(1, 1, "2020-04-17 11:00:00", "2020-04-18 16:00:00", 30, "2020-04-17 11:05:00"),
-(5, 2, "2020-04-14 14:05:00", "2020-04-19 15:30:00", 45, "2020-04-15 08:00:00");
+(1, 1, "2020-04-17 11:00:00", "2020-04-18 16:00:00", 30, "2020-04-17 11:05:00", 1),
+(5, 2, "2020-04-14 14:05:00", "2020-04-19 15:30:00", 45, "2020-04-15 08:00:00", 1);
 
 
 insert into badges (badge_name, badge_description, professional_id) values ("super-pioneer", "Professional with first confirmed appointment", 1);
