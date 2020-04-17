@@ -5,6 +5,7 @@ python3 -m venv venv
 
 pip install Flask
 pip install Flask-API
+pip install -U flask-cors
 pip install pytest
 ```  
 

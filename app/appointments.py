@@ -49,10 +49,11 @@ def list_requested(cid):
 
 
 # requested by the consumer and scheduled by the professional
-@bp.route('/list-requested-scheduled/<int:cid>', methods=['GET'])
-def list_requested_scheduled(cid):
+# TODO it is something wrong with this
+@bp.route('/list-requested-to-confirm/<int:cid>', methods=['GET'])
+def list_requested_to_confirm(cid):
     maybe_requests = query_db(
-        'SELECT appointments.id AS appointments_id, professional_id, requested, professionals.fullname, professionals.qualifications, professionals.profession, professional_scheduled, appointment_date, appointment_duration FROM appointments JOIN professionals ON ('
+        'SELECT appointments.id AS appointments_id, professional_id, requested, professionals.fullname, professionals.qualifications, professionals.profession, professional_scheduled, appointment_date, appointment_duration, consumer_accepted, consumer_resigned FROM appointments JOIN professionals ON ('
         'professionals.id = professional_id) WHERE professional_declined is NULL AND professional_scheduled '
         'is NOT NULL AND consumer_id =?', [cid])
 
@@ -61,6 +62,18 @@ def list_requested_scheduled(cid):
     else:
         return maybe_requests
 
+# requested by the consumer and scheduled and confirmed
+@bp.route('/list-requested-scheduled/<int:cid>', methods=['GET'])
+def list_requested_scheduled(cid):
+    maybe_requests = query_db(
+        'SELECT appointments.id AS appointments_id, professional_id, requested, professionals.fullname, professionals.qualifications, professionals.profession, professional_scheduled, appointment_date, appointment_duration, consumer_accepted, consumer_resigned FROM appointments JOIN professionals ON ('
+        'professionals.id = professional_id) WHERE professional_declined is NULL AND professional_scheduled '
+        'is NOT NULL AND consumer_accepted IS NOT NULL AND consumer_id =?', [cid])
+
+    if not maybe_requests:
+        return {}, status.HTTP_404_NOT_FOUND
+    else:
+        return maybe_requests
 
 # requested by the consumer and declined by the professional
 @bp.route('/list-requested-declined/<int:cid>', methods=['GET'])

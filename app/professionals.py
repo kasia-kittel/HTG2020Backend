@@ -8,7 +8,7 @@ app = current_app
 
 bp = Blueprint('professionals', __name__, url_prefix='/professional')
 
-
+# TODO remove username and password from the response!!
 @bp.route('/<int:id>')
 def get_user(id):
     maybe_professionals = query_db('SELECT * FROM professionals WHERE id = ?', [id], one=True)
@@ -16,7 +16,7 @@ def get_user(id):
     if maybe_professionals is None:
         return {}, status.HTTP_404_NOT_FOUND
     else:
-        maybe_badges = query_db('SELECT * FROM badges WHERE professional_id = ?', [id])
+        maybe_badges = query_db('SELECT DISTINCT * FROM badges WHERE professional_id = ?', [id])
         maybe_professionals["badges"] = maybe_badges
         return maybe_professionals
 

@@ -30,8 +30,8 @@ def test_request_availability_scheduled(client):
 
     assert schedule.status_code == 202
 
-    # the appointment appears on a list of scheduled appointments for consumer
-    scheduled_appointments = client.get(f"/appointments/list-requested-scheduled/{consumer_id}")
+    # the appointment appears on a list of scheduled appointments to confirm by consumer
+    scheduled_appointments = client.get(f"/appointments/list-requested-to-confirm/{consumer_id}")
     scheduled_appointments_data = scheduled_appointments.get_json()
 
     assert scheduled_appointments.status_code == 200
