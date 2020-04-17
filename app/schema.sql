@@ -24,7 +24,10 @@ create TABLE professionals (
 --  for example: Depression, Anxiety, Bipolar, PTSD, OCD, Personality Disorders, Eating Disorders & Body Image Issues etc.
   specialties TEXT NOT NULL,
   languages TEXT NOT NULL,
+  contact_method TEXT NOT NULL,
+  contact_details TEXT NOT NULL,
   details TEXT NOT NULL
+
 );
 
 -- bookmarks
@@ -68,4 +71,4 @@ create TABLE badges (
 );
 
 -- full test search extension FTS5
-create VIRTUAL TABLE profile_search using fts5(professional_id, fullname, qualifications, profession, profile);
+create VIRTUAL TABLE profile_search using fts5(professional_id, fullname, qualifications, profession, specialties, languages, profile);

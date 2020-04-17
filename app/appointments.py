@@ -66,7 +66,7 @@ def list_requested_to_confirm(cid):
 @bp.route('/list-requested-scheduled/<int:cid>', methods=['GET'])
 def list_requested_scheduled(cid):
     maybe_requests = query_db(
-        'SELECT appointments.id AS appointments_id, professional_id, requested, professionals.fullname, professionals.qualifications, professionals.profession, professional_scheduled, appointment_date, appointment_duration, consumer_accepted, consumer_resigned FROM appointments JOIN professionals ON ('
+        'SELECT appointments.id AS appointments_id, professional_id, requested, professionals.fullname, professionals.qualifications, professionals.profession, professionals.contact_method AS contact_method, professionals.contact_details AS contact_details, professional_scheduled, appointment_date, appointment_duration, consumer_accepted, consumer_resigned FROM appointments JOIN professionals ON ('
         'professionals.id = professional_id) WHERE professional_declined is NULL AND professional_scheduled '
         'is NOT NULL AND consumer_accepted IS NOT NULL AND consumer_id =?', [cid])
 
@@ -114,7 +114,7 @@ def list_availability_requests(pid):
     maybe_requests = query_db(
         'SELECT appointments.id AS appointments_id, consumer_id, consumers.username, requested FROM appointments JOIN '
         'consumers ON ( consumers.id = consumer_id) WHERE professional_declined is NULL AND professional_scheduled '
-        'is NULL AND professional_id =?', [pid])
+        'is NULL AND professional_id =? ', [pid])
 
     if not maybe_requests:
         return {}, status.HTTP_404_NOT_FOUND
@@ -148,3 +148,15 @@ def list_availability_requests_declined(pid):
     else:
         return maybe_requests
 
+# scheduled and confirmation status
+@bp.route('/list-appointments-scheduled/<int:pid>', methods=['GET'])
+def list_scheduled(pid):
+    maybe_requests = query_db(
+        'SELECT appointments.id AS appointments_id, consumer_id, professional_id, consumers.username, requested, appointment_date, appointment_duration, consumer_accepted, consumer_resigned FROM appointments JOIN consumers ON ('
+        'consumers.id = consumer_id) WHERE professional_declined is NULL AND professional_scheduled '
+        'is NOT NULL AND professional_id =?', [pid])
+
+    if not maybe_requests:
+        return {}, status.HTTP_404_NOT_FOUND
+    else:
+        return maybe_requests

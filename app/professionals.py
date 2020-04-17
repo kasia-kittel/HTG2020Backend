@@ -30,7 +30,7 @@ def search():
     # not-secure for demo only
     criteria = create_criteria_list(request.form['s'])
     term = create_matching_term(criteria)
-    matching_profiles = query_db('SELECT DISTINCT professional_id, fullname, qualifications, profession '
+    matching_profiles = query_db('SELECT DISTINCT professional_id, fullname, qualifications, profession, specialties, languages '
                                  'FROM profile_search WHERE profile MATCH ? ORDER BY rank', [term])
 
     return matching_profiles
