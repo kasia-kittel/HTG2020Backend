@@ -49,7 +49,6 @@ def list_requested(cid):
 
 
 # requested by the consumer and scheduled by the professional
-# TODO it is something wrong with this
 @bp.route('/list-requested-to-confirm/<int:cid>', methods=['GET'])
 def list_requested_to_confirm(cid):
     maybe_requests = query_db(

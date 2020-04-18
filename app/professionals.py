@@ -16,7 +16,7 @@ def get_user(id):
     if maybe_professionals is None:
         return {}, status.HTTP_404_NOT_FOUND
     else:
-        maybe_badges = query_db('SELECT DISTINCT * FROM badges WHERE professional_id = ?', [id])
+        maybe_badges = query_db('SELECT * FROM badges WHERE professional_id=? GROUP BY badge_name', [id])
         maybe_professionals["badges"] = maybe_badges
         return maybe_professionals
 
